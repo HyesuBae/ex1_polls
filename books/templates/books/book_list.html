@@ -1,0 +1,13 @@
+{% extends "base_books.html" %}
+
+{% block content %}
+  <ht>Book List</h2>
+  <ul>
+    {% for book in object_list %}
+    <!-- 여기서 books 는 project의 urls.py에 있는 namespace를 말하는듯 !?
+        book_detail은 books앱에 있는 urls.py의 name 을 말하는 거겠지? -->
+      <li><a href="{% url 'books:book_detail' book.id %}">
+        {{ book.title }} </a></li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

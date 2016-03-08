@@ -10,13 +10,15 @@ def index(request):
     return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
-    # get_objec_or_404 : 장고의 단축함수
+    # get_objec_or_404(모델클래스, 검색조건1, 검색조건2, ...)
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
 
 def vote(request,question_id):
     p = get_object_or_404(Question, pk=question_id)
     try:
+        # request.POST : 제출된 폼의 데이터를 담고 있는 객체.
+        #               파이썬의 dict처럼 key로 값을 찾을 수 있다.
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # 설문 투표 폼을 다시 보여준다
