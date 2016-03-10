@@ -15,6 +15,14 @@ from books.models import Book, Author, Publisher
 class BooksModelView(TemplateView):
     template_name = 'books/index.html'
 
+    # as_view(), dispatch() 함수는 장고에서 기본적으로 제공.
+    # 정확히는, View 클래스에 구현되어 있고, 다른 뷰들은 이 클래스를 inherit하기 때문에
+    # 이 함수들도 당연히 상속받는 것.
+    # as_view() : 진입 메소드. 클래스의 인스턴스 생성, 그 인스턴스의 dispatch() 메소드 호출
+    # dispatch() : request를 검사해서 GET, POST 등의 어떤 HTTP메소드로 요청되었는지
+    #       알아낸 다음, 인스턴스 내에서 해당 이름을 갖는 메소드로 요청을 중계해 준다.
+    #       해당 메소드가 정의되어있찌 않으면 HttpResponseNotAllowed Exception
+
     def get_context_data(self, **kwargs):
         # 이 메소드를 오버라이딩할 떈 반드시 첫 줄에 super 오버라이딩 해야함
         context = super(BooksModelView, self).get_context_data(**kwargs)
@@ -26,7 +34,7 @@ class BooksModelView(TemplateView):
 # 이를 컨텍스트 변수로 템플릿 시스템에 넘겨주면 된다.
 # 테이블에 들어있는 모든 레코드를 가져와서 리스트를 구성하고 싶으면 모델 클래스명(즉 테이블명)
 # 만 지정해주면 된다.
-# 장고에서는 명시적으로 지정하지 않아도 디폴트로 속성을 지정해준다.
+# 장고에서는 명시적으로 지정하지 않아도 디폴트로 속성(attribute)을 지정해준다.
 # 1) 컨텍스트 변수명 : object_list
 # 2) 템플릿 파일 : 모델명소문자_list.html
 class BookList(ListView):
